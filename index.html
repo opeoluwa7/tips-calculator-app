@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        rel="stylesheet">
+    <title>Tips calculator app</title>
+    <script src="https://kit.fontawesome.com/5b44e4a447.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <h1>S P L I <br> T T E R</h1>
+    <main class="container">
+        <form class="form">
+            <section class="input">
+                <div class="textInput">
+                    <label for="bill">Bill</label>
+                    <div class="bill">
+                        <span id="dollar">$</span>
+                        <input class="number" type="text" id="bill" name="bill">
+                    </div>
+                </div>
+
+                <div class="options-container">
+                    <label id="optionsLabel" for="Options">Select Tip %</label>
+
+                    <div class="options">
+                        <button type="button" id="button1" class="option selected">5%</button>
+
+                        <button id="button2" type="button" class="option">10%</button>
+
+                        <button id="button3" type="button" class="option">15%</button>
+
+                        <button id="button4" type="button" class="option">25%</button>
+
+                        <button id="button5" type="button" class="option">50%</button>
+
+                        <input id="custom" class="option" placeholder="Custom" type="text" name="custom-number">
+                    </div>
+                </div>
+
+                <div class="textInput">
+                    <div class="labels">
+                        <label for="numOfPeople">Number of People</label>
+                        <span id="error-message"></span>
+                    </div>
+                    <div class="numOfPeople">
+                        <svg fill="#809a9e" id="person-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                            <path
+                                d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304l-91.4 0z" />
+                        </svg>
+                        <input type="text" class="number" id="numOfPeople" name="numOfPeople">
+                    </div>
+                </div>
+            </section>
+
+            <section class="output">
+                <div class="tipAmount">
+                    <div class="tipLabel">
+                        <h2>Tip Amount</h2>
+                        <p>/ person</p>
+                    </div>
+                    <h3 id="tipAmountPerPerson"></h3>
+                </div>
+
+                <div class="totalPerson">
+                    <div class="tipLabel">
+                        <h2>Total</h2>
+                        <p>/ person</p>
+                    </div>
+                    <h3 id="totalPerPerson"></h3>
+                </div>
+
+                <button type="reset" id="resetButton">RESET</button>
+
+            </section>
+        </form>
+    </main>
+
+    <script src="./script.js"></script>
+</body>
+
+</html>

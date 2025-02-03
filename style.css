@@ -1,0 +1,212 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --strongCyan: rgb(38, 192, 171);
+    --veryDarkCyan: rgb(0, 73, 77);
+    --darkGrayishCyan: rgb(94, 122, 125);
+    --grayishCyan: rgb(128, 154, 158);
+    --lightGrayishCyan: rgb(197, 228, 231);
+    --veryLightGrayishCyan: rgb(244, 250, 250);
+    --white: rgb(255, 255, 255);
+}
+
+body {
+    background-color: var(--lightGrayishCyan);
+    font-family: "Space Mono", serif;
+    font-weight: normal;
+    font-style: normal;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    gap: 50px;
+    padding-top: 80px;
+}
+
+.container {
+    width: min(100%, 50rem);
+    background-color: var(--white);
+    padding: 25px;
+    display: flex;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    min-height: 100vh;
+    margin: 0 auto;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+}
+
+.form>* {
+    flex: 1
+}
+
+.input {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.output {
+    background-color: var(--veryDarkCyan);
+    color: var(--white);
+    padding: 25px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    gap: 2rem;
+}
+
+.number {
+    max-width: 100%;
+    width: 100%;
+    padding: 15px;
+    border-radius: 8px;
+    outline: none;
+    border: transparent;
+    background-color: var(--veryLightGrayishCyan);
+    text-align: right;
+    font-size: clamp(1.5rem, 2vw, 1.8rem);
+    font-weight: 700;
+    color: var(--veryDarkCyan);
+    cursor: pointer;
+}
+
+#person-icon {
+    width: 1.6rem;
+    height: 1.8rem;
+}
+
+#person-icon,
+#dollar {
+    position: relative;
+    top: 40px;
+    font-size: 1.3rem;
+    padding: 10px 0px 0px 10px;
+    color: var(--grayishCyan) ;
+    fill: var(--grayishCyan) ;
+    left: 10px;
+    
+}
+.options-container{
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+.options {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(100px, 1fr));
+    gap: 1rem;
+}
+.option{
+    padding: 10px;
+    border: transparent;
+    border-radius: 12px;
+    outline: none;
+    background-color: var(--veryDarkCyan);
+    color: var(--white);
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    font-weight: 700;
+    cursor: pointer;
+}
+.options .selected, .option:hover {
+    background-color: var(--strongCyan);
+    color: var(--veryDarkCyan);
+}
+#custom{
+    background-color: var(--veryLightGrayishCyan);
+    color: var(--veryDarkCyan);
+    font-weight: 700;
+    text-align: right;
+    cursor: pointer;
+}
+.number:focus, #custom:focus{
+    border: 1px solid var(--strongCyan);
+}
+.labels{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+#error-message{
+    color: red !important;
+    display: none;
+}
+.textInput label, #error-message{
+    position: relative;
+    top: 15px;
+}
+.textInput label, #optionsLabel, .labels label, #error-message{
+    color: var(--darkGrayishCyan);
+    font-size: clamp(0.9rem, 2vw, 1rem);
+    font-weight: 700;
+}
+.tipAmount, .totalPerson{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+#resetButton{
+    padding: 20px;
+    background-color: var(--strongCyan);
+    color: var(--veryDarkCyan);
+    border: transparent;
+    border-radius: 8px;
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
+    font-weight: 700;
+    cursor: pointer;
+}
+h1{
+    font-size: clamp(1.8rem, 2vw, 2.8rem);
+    color: var(--veryDarkCyan);
+    opacity: 0.8;
+    font-weight: 700;
+}
+h2{
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    white-space: nowrap;
+}
+p{
+    font-size: clamp(0.8rem, 2vw, 0.9rem);
+    opacity: 0.7;
+}
+h3{
+    font-size: clamp(2rem, 2vw, 2.2rem);
+    color: var(--strongCyan);
+}
+@media screen and (min-width: 600px) {
+    body{
+        padding: 0;
+    }
+    .form {
+        flex-direction: row;
+        gap: 4rem;
+    }
+
+    .container {
+        min-height: 50vh;
+        border-radius: 30px;
+    }
+    .input, .output{
+        max-width: 50%;
+    }
+    .output{
+        justify-content: center;
+        gap: 4rem;
+    }
+    .options {
+        grid-template-columns: repeat(3, minmax(100px, 1fr));
+    }
+}
