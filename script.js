@@ -1,121 +1,106 @@
 let options = document.querySelectorAll(".options button");
-let tipResult = document.getElementById("tipAmountPerPerson");
-let totalResult = document.getElementById("totalPerPerson");
+let totalTip = document.getElementById("tipAmountPerPerson");
+let totalBill = document.getElementById("totalPerPerson");
 const custom = document.getElementById("custom");
 const resetButton = document.getElementById("resetButton");
+const errorMessage = document.getElementById("error-message");
 
-tipResult.innerHTML = "$0.00";
-totalResult.innerHTML = "$0.00";
+//default values
+totalTip.textContent = "$0.00";
+totalBill.textContent = "$0.00";
 
-//Tip amount per person
-function tipAmountPerPerson(option, billInput, numOfPeople) {
-    const tipPercentage = option / 100;
-    const _totalTip = billInput * tipPercentage;
-    const totalTipPerPerson = _totalTip / numOfPeople;
-    if (isNaN(totalTipPerPerson) || totalTipPerPerson === 0) {
-        tipResult.innerHTML = "$0.00";
+function totalTipPerPerson(option) {
+    //bill * tip/100
+
+    let bill = document.getElementById("bill");
+    let numOfPersons = document.getElementById("numOfPeople");
+
+    const billValue = parseFloat(bill.value);
+    const personsValue = parseFloat(numOfPersons.value);
+    const tip = option / 100;
+    const _totalTip = (billValue * tip) / personsValue;
+
+    if (isNaN(billValue) || isNaN(personsValue)) {
+        totalTip.textContent = "$0.00";
     } else {
-        tipResult.innerHTML = `$${totalTipPerPerson.toFixed(2)}`;
+        totalTip.textContent = `$${_totalTip.toFixed(2)}`;
+    }
+
+    return _totalTip;
+}
+
+function totalBillPerPerson(option) {
+    let bill = document.getElementById("bill");
+    let numOfPersons = document.getElementById("numOfPeople");
+
+    const billValue = parseFloat(bill.value);
+    const personsValue = parseFloat(numOfPersons.value);
+
+    const tip = option / 100;
+    const _totalTip = billValue * tip;
+
+    const _totalBill = (billValue + _totalTip) / personsValue;
+
+
+    if (isNaN(billValue) || isNaN(personsValue)) {
+        totalBill.textContent = "$0.00";
+    } else {
+        totalBill.textContent = `$${_totalBill.toFixed(2)}`;
+    }
+
+    return _totalBill;
+}
+
+
+function calculate(option) {
+    let numOfPersons = document.getElementById("numOfPeople");
+    const personsValue = parseFloat(numOfPersons.value);
+
+    if (personsValue === 0) {
+        errorMessage.style.display = 'block';
+        errorMessage.textContent = "Can\'t be zero";
+    } else {
+        errorMessage.style.display = 'none';
+        totalTipPerPerson(option);
+        totalBillPerPerson(option);
     }
 }
 
-//Total Bill per person
-function totalBillPerPerson(option, billInput, numOfPeople) {
-    const tipPercentage = option / 100;
-    const _totalTip = billInput * tipPercentage;
-    const totalBillPerPerson = (billInput + _totalTip) / numOfPeople;
-    if (isNaN(totalBillPerPerson) || totalBillPerPerson === 0) {
-        totalResult.innerHTML = "$0.00";
-    } else {
-        totalResult.innerHTML = `$${totalBillPerPerson.toFixed(2)}`
-    }
-}
-
-//Main function to calculate all
-function calculateTip(optionValue) {
-
-    const billInput = parseFloat(document.getElementById("bill").value);
-
-    const numOfPeople = parseFloat(document.getElementById("numOfPeople").value);
-
-    if (numOfPeople > 0) {
-        tipAmountPerPerson(optionValue, billInput, numOfPeople);
-        totalBillPerPerson(optionValue, billInput, numOfPeople);
-    } else {
-        errorHandler(numOfPeople);
-    }
-
-
-}
-
-
-//Button click event
 options.forEach((button) => {
     button.addEventListener("click", () => {
 
-        options.forEach((button) => button.classList.remove("selected"));
+        options.forEach((button) => {
+            button.classList.remove("selected");
+        });
+
         button.classList.add("selected");
 
-        let _optionValue = parseFloat(button.innerText.replace("%", ""));
-        custom.value = "";
+        const value = parseFloat(button.textContent.replace("%", ""));
+        console.log(value);
 
-        calculateTip(_optionValue);
+        calculate(value);
+    })
+});
+
+custom.addEventListener("focus", () => {
+    options.forEach((button) => {
+        button.classList.remove("selected");
     });
 });
 
+custom.addEventListener("input", () => {
+    const customValue = parseFloat(custom.value);
 
-//Custom input event
-custom.addEventListener("focus", handleCustomInput);
-custom.addEventListener("input", handleCustomInput);
-
-function handleCustomInput() {
-    options.forEach((button) => button.classList.remove("selected"));
-    let billInput = parseFloat(document.getElementById("bill").value);
-    let numOfPeople = parseFloat(document.getElementById("numOfPeople").value);
-    let customValue = custom.value;
 
     if (isNaN(customValue)) {
-        tipResult.innerHTML = "$0.00";
-        totalResult.innerHTML = "$0.00";
+        totalTip.textContent = "$0.00";
+        totalBill.textContent = "$0.00";
     } else {
-        tipAmountPerPerson(customValue, billInput, numOfPeople);
-        totalBillPerPerson(customValue, billInput, numOfPeople);
-    }
-
-    errorHandler(numOfPeople);
-}
-
-
-//Reset Button function
-resetButton.addEventListener("click", () => {
-    tipResult.innerHTML = "$0.00";
-    totalResult.innerHTML = "$0.00";
-    options.forEach((button) => button.classList.remove("selected"));
-
-    let defaultButton = document.getElementById("button1");
-
-    if (defaultButton) {
-        defaultButton.classList.add("selected");
+        calculate(customValue);
     }
 });
 
-
-//Error handler
-function errorHandler(numOfPeople) {
-    const errorMessage = document.getElementById("error-message");
-    let numOfPeopleBorder = document.getElementById("numOfPeople");
-
-    if (numOfPeople === 0) {
-        errorMessage.style.display = "flex";
-        errorMessage.innerText = "Can\'t be zero";
-        numOfPeopleBorder.style.borderColor = "red";
-        tipResult.innerHTML = "$0.00";
-        totalResult.innerHTML = "$0.00";
-    } else {
-        errorMessage.style.display = "none";
-        numOfPeopleBorder.style.borderColor = "";
-    }
-
-}
-
-
+resetButton.addEventListener("click", () => {
+    totalTip.textContent = "$0.00";
+    totalBill.textContent = "$0.00";
+})
